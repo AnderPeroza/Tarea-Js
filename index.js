@@ -11,11 +11,12 @@ if(btnElement){
 //agarrar el elemento form
 
 const deleteTask = (id) =>{
-    console.log("holaaaaaaaaaaaaaaaaaaaaaa")
+    //console.log("holaaaaaaaaaaaaaaaaaaaaaa")
     const taskListElement = document.getElementById("task-list")
     const elementToDelete = document.getElementById(id)
     taskListElement.removeChild(elementToDelete)
 }
+
 const formElement= document.getElementById("task-form")
 
 if(formElement){
@@ -24,8 +25,10 @@ if(formElement){
     formElement.addEventListener("submit",function(event){
         event.preventDefault()
         const inputElement = document.getElementById("taskName")
+        const taskDateElement = document.getElementById("taskDate")
         
-        if(inputElement.value !== ""){
+        
+        if(inputElement.value !== "" && taskDateElement.value !== ""){
             // agarrar el elemento de la lista
             
             const selectElement = document.getElementById("taskPriority")
@@ -33,10 +36,16 @@ if(formElement){
 
 
             const taskListElement = document.getElementById("task-list")
+            const taskListTitle= document.getElementById("card-title")
+            
 
 
             console.log(selectElement.value)
             console.log(inputElement.value)
+            console.log()
+            const myDate= Date.parse(taskDateElement.value)
+
+            
 
             let  mayorId= 1
 
@@ -44,12 +53,24 @@ if(formElement){
                 const ultimoHijo= taskListElement.children[taskListElement.children.length - 1]
                 mayorId += parseInt(ultimoHijo.id)
             }
+            let backgroundColor = ""
 
+            if(selectElement.value < 3){
+                backgroundColor = "background-color: blue; color: white;"
+            }else if(selectElement.value > 2 && selectElement.value < 5 ){
+                backgroundColor = "background-color: yellow; "
+            }else{
+                backgroundColor = "background-color: red; color: white;"
+            }
+            
+            
+            
             taskListElement.innerHTML +=`
-                <li id="${mayorId}" class="list-group-item d-flex justify-content-between align-items-center"
-                style="word-break: keep-all;">
+                <li id="${mayorId}"  class="list-group-item d-flex justify-content-between align-items-center"
+                style="word-break: keep-all; ${backgroundColor}">
                     <div class="mx-2 text-start" style="flex: 1;">
                         <div class="fw-bold">${inputElement.value}</div>
+                        <div class="fw-bold">${taskDateElement.value}</div>                        
                     </div>
                     <span class="badge bg-primary rounded-pill mx-1">${selectElement.value}</span>
             
@@ -61,7 +82,7 @@ if(formElement){
                 </li>
             `
         }else{
-            alert("Debe especificar una tarea")
+            alert("Debe especificar una tarea y fecha")
         } 
     })
 

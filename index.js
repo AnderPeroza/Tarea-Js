@@ -9,29 +9,34 @@ if(btnElement){
     })
 } */
 //agarrar el elemento form
-
+const taskListElement = document.getElementById("task-list")
 const deleteTask = (id) =>{
     //console.log("holaaaaaaaaaaaaaaaaaaaaaa")
     const taskListElement = document.getElementById("task-list")
     const elementToDelete = document.getElementById(id)
     taskListElement.removeChild(elementToDelete)
+    init()
 }
 
 const formElement= document.getElementById("task-form")
 
+const btnClearAll = document.getElementById("btn")
+btnClearAll.style.display = "none"
+const inputElement = document.getElementById("taskName")
+const taskDateElement = document.getElementById("taskDate")    
+const selectElement = document.getElementById("taskPriority")
 if(formElement){
     //modificar el evento
     
     formElement.addEventListener("submit",function(event){
         event.preventDefault()
-        const inputElement = document.getElementById("taskName")
-        const taskDateElement = document.getElementById("taskDate")
+        
         
         
         if(inputElement.value !== "" && taskDateElement.value !== ""){
             // agarrar el elemento de la lista
             
-            const selectElement = document.getElementById("taskPriority")
+            
 
 
 
@@ -63,7 +68,7 @@ if(formElement){
                 backgroundColor = "background-color: red; color: white;"
             }
             
-            
+        
             
             taskListElement.innerHTML +=`
                 <li id="${mayorId}"  class="list-group-item d-flex justify-content-between align-items-center"
@@ -81,12 +86,44 @@ if(formElement){
                     </button>
                 </li>
             `
+            
+
+            
+            init()
         }else{
             alert("Debe especificar una tarea y fecha")
         } 
     })
 
 }
+
+
+
+const alerta=() =>{
+    const music = new Audio('Audio Sound Effect.mp3')
+    const opcion = confirm("desea eliminar")
+    if (opcion == true) {
+        taskListElement.innerHTML = ""
+        music.play()
+        init()
+    }
+
+}
+
+
+const contadorTask = document.getElementById("card-title")
+init = () =>{
+    if(taskListElement.children.length !== 0){
+        btnClearAll.style.display = "block"
+    }
+    contadorTask.innerHTML = `Listado de tareas :${taskListElement.children.length}`
+
+    inputElement.value = ""
+    taskDateElement.value = ""
+    selectElement.value = 5
+
+}
+init()
 
 
 
